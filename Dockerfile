@@ -7,13 +7,13 @@ ENV PYTHONUNBUFFERED=1
 # Python venv erstellen
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv ${VIRTUAL_ENV}
-ENV PATH="{VIRTUAL_ENV}/bin:$PATH"
+ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 # Bibliotheken installieren und Verzeichnis vorbereiten
 COPY requirements.txt .
 RUN python -m pip install --upgrade-pip; \
     python -m pip install -r requirements.txt; \
-    python -w ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
+    python -W ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
     python -m pip install gunicorn; \
     mkdir -p /app/v3/model
 
