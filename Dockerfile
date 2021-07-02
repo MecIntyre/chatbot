@@ -11,7 +11,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 # Bibliotheken installieren und Verzeichnis vorbereiten
 COPY requirements.txt .
-RUN python -m pip install --upgrade-pip; \
+RUN python -m pip install --upgrade pip; \
     python -m pip install -r requirements.txt; \
     python -W ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
     python -m pip install gunicorn; \
