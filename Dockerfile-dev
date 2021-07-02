@@ -14,17 +14,14 @@ COPY requirements.txt .
 RUN python -m pip install --upgrade pip; \
     python -m pip install -r requirements.txt; \
     python -W ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
-    python -m pip install gunicorn; \
-    mkdir -p /app
+    mkdir -p /app/v3/model
 
 #Verzeichnis erstellen und Inhalt einfügen
 WORKDIR /app
-COPY . /app
-RUN mv intents.json /app/v3
 
 # Benutzerkonto -> Sicherheit (kein root)
 RUN useradd appuser && chown -R appuser /app
 USER appuser
 
 # Startkommando nach Erstellung der Images 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "chatbot-webgui:app"]
+CMD ["python", "chatbot-webgui.py"]
