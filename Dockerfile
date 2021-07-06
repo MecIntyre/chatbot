@@ -15,7 +15,7 @@ RUN python -m pip install --upgrade pip; \
     python -m pip install -r requirements.txt; \
     python -W ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
     python -m pip install gunicorn; \
-    mkdir -p /ap
+    mkdir -p /app/v3/model
 
 #Verzeichnis erstellen und Inhalt einfügen
 WORKDIR /app
