@@ -14,7 +14,7 @@ COPY requirements.txt .
 RUN python -m pip install --upgrade pip; \
     python -m pip install -r requirements.txt; \
     python -W ignore -m nltk.downloader -d /usr/local/share/nltk_data punkt; \
-    mkdir -p /app
+    mkdir /app
 
 #Verzeichnis erstellen und Inhalt einfügen
 WORKDIR /app
@@ -23,5 +23,4 @@ WORKDIR /app
 RUN useradd appuser && chown -R appuser /app
 USER appuser
 
-# Startkommando nach Erstellung der Images 
 CMD ["python", "chatbot-webgui.py"]
