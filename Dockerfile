@@ -1,13 +1,13 @@
-# Startbedingung und Pythondefinition
 FROM python:3.9-slim-buster
 EXPOSE 5000
+# Caching und Compiling aus, vereinfacht das Logging
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Python venv erstellen
+# venv installieren
 ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv ${VIRTUAL_ENV}
-ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Bibliotheken installieren und Verzeichnis vorbereiten
 COPY requirements.txt .
@@ -17,13 +17,12 @@ RUN python -m pip install --upgrade pip; \
     python -m pip install gunicorn; \
     mkdir -p /app/v3/model
 
-#Verzeichnis erstellen und Inhalt einfügen
 WORKDIR /app
 COPY . /app
+RUN mv intents.json model /app/v3
 
 # Benutzerkonto -> Sicherheit (kein root)
 RUN useradd appuser && chown -R appuser /app
 USER appuser
 
-# Startkommando nach Erstellung der Images 
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "chatbot-webgui:app"]

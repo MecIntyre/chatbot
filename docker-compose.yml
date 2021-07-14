@@ -1,12 +1,10 @@
 version: '3.4'
 
-# Erstellung, Betitelung der Image und Festlegung der Ports
 services:
-    chatbot-webgui:
-        image: chatbot-webgui-v3
-        build:
-            context: .
-            dockerfile: ./Dockerfile
-        ports:
-            - 5000:5000
-            
+  chatbot-webgui:
+    image: chatbot-webgui-v3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports: 
+      - 5000:5000
